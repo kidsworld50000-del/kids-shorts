@@ -122,6 +122,35 @@ def melody(path, seconds):
             buf += struct.pack("<h", int(max(-1, min(1, v)) * 32767))
         w.writeframes(bytes(buf))
 
+VOICE = "ar-SA-HamedNeural"   # free Microsoft Arabic (Saudi) voice via edge-tts
+
+def narrate(scenes, melody_wav, out_wav, tmp):
+    """Mix a spoken line per scene over the melody. Falls back to melody only on any failure."""
+    try:
+        clips = []
+        for i, (bg, kind, color, word, line) in enumerate(scenes):
+            txt = line if kind.startswith("letter:") else f"{word}. {line}"
+            mp3 = os.path.join(tmp, f"v{i}.mp3")
+            subprocess.run([sys.executable, "-m", "edge_tts", "--voice", VOICE, "--rate=-10%",
+                            "--text", txt, "--write-media", mp3], check=True, timeout=60,
+                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            if os.path.getsize(mp3) < 1000: raise RuntimeError("empty voice clip")
+            clips.append(mp3)
+        cmd = ["ffmpeg", "-y", "-loglevel", "error", "-i", melody_wav]
+        for c in clips: cmd += ["-i", c]
+        fl = ["[0:a]volume=0.35[m]"]
+        for i in range(len(clips)):
+            ms = int((i * SCENE_SEC + 0.8) * 1000)
+            fl.append(f"[{i+1}:a]adelay={ms}|{ms},volume=1.6[v{i}]")
+        mix = "[m]" + "".join(f"[v{i}]" for i in range(len(clips)))
+        fl.append(f"{mix}amix=inputs={len(clips)+1}:normalize=0:duration=first[a]")
+        cmd += ["-filter_complex", ";".join(fl), "-map", "[a]", out_wav]
+        subprocess.run(cmd, check=True)
+        return out_wav
+    except Exception as e:
+        print("voice-over skipped:", e)
+        return melody_wav
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     want = sys.argv[1] if len(sys.argv) > 1 else None
@@ -131,6 +160,7 @@ def main():
     total = len(s["scenes"]) * SCENE_SEC
     with tempfile.TemporaryDirectory() as tmp:
         wav = os.path.join(tmp, "a.wav"); melody(wav, total)
+        wav = narrate(s["scenes"], wav, os.path.join(tmp, "mix.wav"), tmp)
         p = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24",
             "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-", "-i", wav,
             "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-pix_fmt", "yuv420p",
