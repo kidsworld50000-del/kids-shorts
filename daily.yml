@@ -1,0 +1,25 @@
+name: Daily kids short
+on:
+  schedule:
+    - cron: "0 13 * * *"   # 16:00 Riyadh
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  make-video:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg fonts-dejavu-core libraqm0
+      - run: pip install pillow
+      - run: python shorts_generator.py
+      - name: Publish as a GitHub Release (Make.com picks it up)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          MP4=$(ls -t output/*.mp4 | head -1)
+          JSON="${MP4%.mp4}.json"
+          TITLE=$(python -c "import json,sys;print(json.load(open('$JSON',encoding='utf-8'))['title'])")
+          DESC=$(python -c "import json,sys;print(json.load(open('$JSON',encoding='utf-8'))['description'])")
+          TAG="short-$(date -u +%Y%m%d-%H%M%S)"
+          gh release create "$TAG" "$MP4" --title "$TITLE" --notes "$DESC"
