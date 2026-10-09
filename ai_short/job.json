@@ -1,0 +1,24 @@
+{
+ "title": "تعلم العد مع الحيوانات | أرقام للأطفال #shorts",
+ "description": "تعلّم العد من ١ إلى ٣ مع الأرنب والبط والفراشات.\n#shorts #اطفال #تعليم_الاطفال #العد #ارقام",
+ "scenes": [
+  {
+   "digit": "١",
+   "word": "واحد",
+   "line": "أرنب واحد",
+   "url": "https://storage.googleapis.com/xi-backend/database/workspace/f8bc90b9188d4efd89213dda7c61a69a/content_generation/XxTJXe1DDs9OuyDvXQqm/TpFgxOKVenuOY34gTxhs/content.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20261009%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20261009T211453Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=3445288dadf8542c1a841601c10b6bf51bf95ba9ec6350292efbf336301ddd6eba8a7f255668e94c92b399c610ae50edce16776e962193242b19be99c7e7c48708aa160c8849c30d29fee84a1b707ec82d10d59403e084f33dc532c100f5665824a017c49d7694f263e56c9ea9eb64df3ae85e9a569826768c3cefd019154bb4e6cde692d128dad93b4561d82def15eb6192751bc08aaa2a4053f53a2195b11df078f5dc2c597af1eaf6dc5dcf484978cdc75652a87063e656eb4fd07b4b0cfc391975f40ec53ef300d43123b569b3c32bc6e0d8ebef134a246d6bb348d9110dd554c9db7e5da0771b28c1c3a5b061b045d79a6d41cc9521357e6184de3622be"
+  },
+  {
+   "digit": "٢",
+   "word": "اثنان",
+   "line": "بطتان اثنتان",
+   "url": "https://storage.googleapis.com/xi-backend/database/workspace/f8bc90b9188d4efd89213dda7c61a69a/content_generation/e333pgpoFfGCUjBVOSrM/c5Isn3K9hZgnh4pkP0S5/content.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20261009%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20261009T211458Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=964760d426eb4ae6aa40122335a3bb9fd3df7cc8722bdcadba18e3193af7e8d1d584fef8a9935f5c0cf8236f793937f2f14258ca9f45542381c51fe70f4dbb7f86275659d5a7f4b8d4fde497d882179a2d30138e028592bd2fa9937d19b419045b59621a5a4f4f4b36b4d8477123d730f181f4c2e0697d21018da0aa6b8862d8501d45007d9b2632470c1352ac22216bbb2dd73f24b848d26e968c43b3919093a40fe6313b19307265e89b1bdd686134c05241654970d6f148efe9cdcd1bac61e1c262601c96622a55b07bf5309fe1b35f8c759f8e001fc4a6832140df35e0cbb759960a4cb3c2480b7c7e2069275ff816f9f953018eebdc0fde80c51307680b"
+  },
+  {
+   "digit": "٣",
+   "word": "ثلاثة",
+   "line": "ثلاث فراشات",
+   "url": "https://storage.googleapis.com/xi-backend/database/workspace/f8bc90b9188d4efd89213dda7c61a69a/content_generation/fi6nZJGpBDRMy7QinND3/KgIECWUSVLBcBUSsRDbq/content.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20261009%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20261009T211504Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=a14b48e44e8be3727bf355e386d1c795df32674575f962bb16a9a641f9d698f85b43eadd117511ecfc7592407fcb9abfc4dcbc19832c0ad68313c0ffd6af8b2cec634c1aacde359ede223c2c2b6f7ba4b722253f99c65331d077c2cf635ef3de18427ed708789b1ccf553901da033b9be87429d7ea5325ec8b455a2f129f0ca541a755d6ee193f4fa8b8cbbde2eb488ade91379ae86d884f11b0b07069a46b121935c7a430c6451d27525723c248fb7ef01865a262214ffafb18192d8ce5af53540c06c856fd104c8184e3b0dc9fb31dc904be6283ea28b26ac9f301543e7adbbaf9d2df6948ec5ede0607b02d80352ebde62af27d9afe1e6e5bb83835142457"
+  }
+ ]
+}
