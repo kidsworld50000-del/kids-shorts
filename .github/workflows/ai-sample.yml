@@ -1,0 +1,17 @@
+name: AI sample short (not published)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  make-sample:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg fonts-dejavu-core libraqm0
+      - run: pip install pillow edge-tts
+      - run: python ai_sample.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ai-sample
+          path: output/ai_sample.mp4
