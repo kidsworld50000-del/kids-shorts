@@ -1,0 +1,32 @@
+name: AI short
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: "true = publish as release (Make uploads it); false = artifact only"
+        required: false
+        default: "false"
+permissions:
+  contents: write
+jobs:
+  make-ai-short:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg fonts-dejavu-core libraqm0
+      - run: pip install pillow edge-tts
+      - run: python ai_short.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ai-short
+          path: output/ai_short.mp4
+      - name: Publish as a GitHub Release (Make.com picks it up)
+        if: ${{ inputs.publish == 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          JSON="output/ai_short.json"
+          TITLE=$(python -c "import json;print(json.load(open('$JSON',encoding='utf-8'))['title'])")
+          DESC=$(python -c "import json;print(json.load(open('$JSON',encoding='utf-8'))['description'])")
+          TAG="ai-short-$(date -u +%Y%m%d-%H%M%S)"
+          gh release create "$TAG" output/ai_short.mp4 --title "$TITLE" --notes "$DESC"
