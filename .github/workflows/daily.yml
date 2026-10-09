@@ -15,10 +15,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: sudo apt-get update && sudo apt-get install -y ffmpeg fonts-dejavu-core libraqm0
-      - run: pip install pillow edge-tts
-      - run: python shorts_generator.py "${{ inputs.script }}"
+      - name: Skip scheduled run if an AI short was published in the last 20h
+        id: chk
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release list --limit 20 --json tagName,createdAt > r.json
+          N=$(python3 -c "import json,datetime as d; r=json.load(open('r.json')); c=d.datetime.now(d.timezone.utc)-d.timedelta(hours=20); print(sum(1 for x in r if x['tagName'].startswith('ai-short-') and d.datetime.fromisoformat(x['createdAt'].replace('Z','+00:00'))>c))")
+          if [ "$GITHUB_EVENT_NAME" = "schedule" ] && [ "$N" -gt 0 ]; then echo "skip=true" >> "$GITHUB_OUTPUT"; else echo "skip=false" >> "$GITHUB_OUTPUT"; fi
+      - if: steps.chk.outputs.skip != 'true'
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg fonts-dejavu-core libraqm0
+      - if: steps.chk.outputs.skip != 'true'
+        run: pip install pillow edge-tts
+      - if: steps.chk.outputs.skip != 'true'
+        run: python shorts_generator.py "${{ inputs.script }}"
       - name: Publish as a GitHub Release (Make.com picks it up)
+        if: steps.chk.outputs.skip != 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
